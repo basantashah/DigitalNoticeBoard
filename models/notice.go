@@ -16,6 +16,8 @@ type Notices struct {
 	Subject    string `json:"subject"`
 	Content    string `json:"content"`
 	Department string `json:"department"`
+	Urgent     string `json:"urgent"`
+	Status     string `json:"status"`
 	UserID     uint   `json:"user_id"`
 }
 
@@ -36,6 +38,13 @@ func (notice *Notices) Validate() (map[string]interface{}, bool) {
 
 	if notice.Department == "" {
 		return u.Message(false, "Notice from which department should be on payload"), false
+	}
+	if notice.Urgent == "" {
+		return u.Message(false, "The notice type:Urgent or Normal cannot"), false
+	}
+
+	if notice.Status == "" {
+		return u.Message(false, "The active or inactive of notice should be there"), false
 	}
 
 	if notice.UserID <= 0 {
