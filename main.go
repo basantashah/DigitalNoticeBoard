@@ -1,15 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"go-contacts/app"
 	"go-contacts/controllers"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 )
 
 func main() {
@@ -23,10 +22,7 @@ func main() {
 
 	router.Use(app.JwtAuthentication) //attach JWT auth middleware
 
-	handler := cors.Default().Handler(router)
-
 	port := os.Getenv("PORT")
-	// if port number is not defined in env variable, then only it will use port defined here
 
 	if port == "" {
 		port = "8080"
@@ -34,9 +30,8 @@ func main() {
 
 	log.Println("Listening .......")
 
-	err := http.ListenAndServe(":"+port, handler) //Launch the app, visit localhost:8000/api/*
-	if err != nil {
-		fmt.Print(err)
-	}
+	corsObj := handlers.AllowedOrigins([]string{"*"})
+
+	log.Fatal(http.ListenAndServe(":"+port, handlers.CORS(corsObj)(router)))
 
 }
