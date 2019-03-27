@@ -25,8 +25,10 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "8080"
+		port = "8000"
 	}
+
+	// println(os.Getenv("port"))
 
 	log.Println("Listening .......")
 
