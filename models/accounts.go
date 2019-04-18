@@ -76,7 +76,7 @@ func (account *Account) Create() map[string]interface{} {
 
 	account.Password = "" //delete password
 
-	response := u.Message(true, "Account has been created")
+	response := u.Message(true, "Account created successfully")
 	response["account"] = account
 	return response
 }

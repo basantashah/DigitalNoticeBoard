@@ -24,7 +24,10 @@ var CreateContact = func(w http.ResponseWriter, r *http.Request) {
 }
 
 var GetContactsFor = func(w http.ResponseWriter, r *http.Request) {
+	//Allow CORS here By * or specific origin
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	id := r.Context().Value("user").(uint)
 	data := models.Getnotices(id)
 	resp := u.Message(true, "success")
