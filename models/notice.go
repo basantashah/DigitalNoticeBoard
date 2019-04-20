@@ -93,10 +93,10 @@ func Getnotice(id uint) *Notices {
 	return notice
 }
 
-func Getnotices(user uint) []*Notices {
+func Getnotices(status uint) []*Notices {
 
 	notices := make([]*Notices, 0)
-	err := GetDB().Table("notices").Where("user_id = ?", user).Find(&notices).Error
+	err := GetDB().Table("notices").Where("status = ?", status).Find(&notices).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil
