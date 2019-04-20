@@ -82,21 +82,45 @@ func (notice *Notices) Create() map[string]interface{} {
 	return resp
 }
 
-// Getnotice is used to fetch notice
-func Getnotice(id uint) *Notices {
+// To-Do
 
-	notice := &Notices{}
-	err := GetDB().Table("notices").Where("id = ?", id).First(notice).Error
-	if err != nil {
-		return nil
+func (notice *Notices) Update() map[string]interface{} {
+
+	if resp, ok := notice.Validate(); !ok {
+		return resp
 	}
-	return notice
+
+	GetDB().Update(notice)
+
+	resp := u.Message(true, "success")
+	resp["notice"] = notice
+	return resp
 }
 
-func Getnotices(status bool) []*Notices {
+// func Getnotices(status bool) []*Notices {
+// 	notices := make([]*Notices, 0)
+// 	err := GetDB().Table("notices").Where("status = ?", true).Find(&notices).Error
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return nil
+// 	}
+// 	return notices
+// }
 
+func Getnotices(user uint) []*Notices {
 	notices := make([]*Notices, 0)
-	err := GetDB().Table("notices").Where("status = ?", status).Find(&notices).Error
+	err := GetDB().Table("notices").Where("status = true").Find(&notices).Error
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return notices
+}
+
+func Getyournotices(user uint) []*Notices {
+	notices := make([]*Notices, 0)
+	err := GetDB().Table("notices").Where("user_id = ?", user).Find(&notices).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil
