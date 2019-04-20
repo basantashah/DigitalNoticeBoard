@@ -22,8 +22,7 @@ type Notices struct {
 	Department string    `json:"department"`
 	Urgent     bool      `json:"urgent"`
 	Status     bool      `json:"status"`
-
-	UserID uint `json:"user_id"`
+	UserID     uint      `json:"user_id"`
 }
 
 /*
