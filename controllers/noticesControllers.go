@@ -25,8 +25,8 @@ var CreateNotice = func(w http.ResponseWriter, r *http.Request) {
 
 var GetNoticeFor = func(w http.ResponseWriter, r *http.Request) {
 	//Allow CORS here By * or specific origin
-	id := r.Context().Value("user").(uint)
-	data := models.Getnotices(id)
+	status := r.Context().Value("status").(bool)
+	data := models.Getnotices(status)
 	resp := u.Message(true, "success")
 	resp["data"] = data
 	u.Respond(w, resp)
