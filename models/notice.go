@@ -31,9 +31,6 @@ type Notices struct {
 returns message and true if the requirement is met
 */
 func (notice *Notices) Validate() (map[string]interface{}, bool) {
-	// if notice.Date < time.Now() {
-	// 	return u.Message(false, "time cannot be in past"), false
-	// }
 
 	if notice.Subject == "" {
 		return u.Message(false, "Subject information should be on the payload"), false
@@ -46,16 +43,6 @@ func (notice *Notices) Validate() (map[string]interface{}, bool) {
 	if notice.Department == "" {
 		return u.Message(false, "Notice from which department should be on payload"), false
 	}
-	// if notice.Urgent == "" {
-	// 	return u.Message(false, "The notice type:Urgent or Normal cannot be left empty"), false
-	// }
-
-	// if notice.Status !=  {
-	// 	return u.Message(false, "The active or inactive of notice should be there"), false
-	// }
-	// if notice.Expiry == time.Time {
-	// 	return u.Message(false, "Subject information should be on the payload"), false
-	// }
 
 	if notice.UserID <= 0 {
 		return u.Message(false, "User is not recognized"), false
@@ -75,37 +62,26 @@ func (notice *Notices) Create() map[string]interface{} {
 		return resp
 	}
 
-	GetDB().Create(notice)
+	GetDB().Create(notice).Where("")
 
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
 	return resp
 }
 
-// To-Do
+// To-DO
 
 func (notice *Notices) Update() map[string]interface{} {
-
+	// notices := make([]*Notices, 0)
 	if resp, ok := notice.Validate(); !ok {
 		return resp
 	}
-
-	GetDB().Update(notice)
+	GetDB().Update(notice).Where("")
 
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
 	return resp
 }
-
-// func Getnotices(status bool) []*Notices {
-// 	notices := make([]*Notices, 0)
-// 	err := GetDB().Table("notices").Where("status = ?", true).Find(&notices).Error
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return nil
-// 	}
-// 	return notices
-// }
 
 func Getnotices(user uint) []*Notices {
 	notices := make([]*Notices, 0)
@@ -128,3 +104,15 @@ func Getyournotices(user uint) []*Notices {
 
 	return notices
 }
+
+// func DeleteNotice(user uint) []*Notices {
+// 	notices := make([]*Notices, 0)
+// 	err := GetDB().Table("notices").Where("user_id = ?", user).Find(&notices).Error
+// 	err :=
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return nil
+// 	}
+
+// 	return notices
+// }

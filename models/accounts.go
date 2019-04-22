@@ -81,21 +81,6 @@ func (account *Account) Create() map[string]interface{} {
 	return response
 }
 
-//
-/* This will be used to delete created account */
-//
-
-/* func (account *Account) Delete() map[string]interface{} {
-	if resp, ok := account.Validate(); !ok {
-		return resp
-		os.Exit(0)
-	}
-
-	GetDB().C
-
-} */
-
-//Login with registered account
 func Login(email, password string) map[string]interface{} {
 
 	account := &Account{}
