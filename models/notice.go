@@ -4,8 +4,6 @@ import (
 	"fmt"
 	u "go-contacts/utils"
 	"time"
-
-	"github.com/jinzhu/gorm"
 )
 
 // ///////////////////// //
@@ -13,16 +11,19 @@ import (
 // ////////////////////	//
 // Notices for creating notice table on db
 type Notices struct {
-	gorm.Model
-	Title string `json:"title"`
-	// Date       time.Time `json:"date"`
-	Expiry     time.Time `json:"expiry"`
-	Subject    string    `json:"subject"`
-	Content    string    `json:"content"`
-	Department string    `json:"department"`
-	Urgent     bool      `json:"urgent"`
-	Status     bool      `json:"status"`
-	UserID     uint      `json:"user_id"`
+	// gorm.Model
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	DeletedAt  *time.Time `sql:"index"`
+	ID         uint       `json:"id"`
+	Title      string     `json:"title"`
+	Expiry     time.Time  `json:"expiry"`
+	Subject    string     `json:"subject"`
+	Content    string     `json:"content"`
+	Department string     `json:"department"`
+	Urgent     bool       `json:"urgent"`
+	Status     bool       `json:"status"`
+	UserID     uint       `json:"user_id"`
 }
 
 /*
@@ -30,6 +31,17 @@ type Notices struct {
 
 returns message and true if the requirement is met
 */
+func (notice *Notices) ValidateDelete() (map[string]interface{}, bool) {
+
+	if notice.ID <= 0 {
+		return u.Message(false, "There should be atleast notice id to delete ;)"), false
+	}
+
+	//All the required parameters are present
+	return u.Message(true, "success"), true
+}
+
+// Validate is used to validate the json sent for posting notice
 func (notice *Notices) Validate() (map[string]interface{}, bool) {
 
 	if notice.Subject == "" {
@@ -69,14 +81,24 @@ func (notice *Notices) Create() map[string]interface{} {
 	return resp
 }
 
-// To-DO
+func (notice *Notices) Delete() map[string]interface{} {
+	// notices := make([]*Notices, 0)
+	if resp, ok := notice.ValidateDelete(); !ok {
+		return resp
+	}
+	GetDB().Delete(notice).Where("id = ?", notice.ID)
+
+	resp := u.Message(true, "success")
+	resp["notice"] = notice
+	return resp
+}
 
 func (notice *Notices) Update() map[string]interface{} {
 	// notices := make([]*Notices, 0)
 	if resp, ok := notice.Validate(); !ok {
 		return resp
 	}
-	GetDB().Update(notice).Where("")
+	GetDB().Update(notice).Where("id = ?", notice.ID)
 
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
@@ -104,15 +126,3 @@ func Getyournotices(user uint) []*Notices {
 
 	return notices
 }
-
-// func DeleteNotice(user uint) []*Notices {
-// 	notices := make([]*Notices, 0)
-// 	err := GetDB().Table("notices").Where("user_id = ?", user).Find(&notices).Error
-// 	err :=
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return nil
-// 	}
-
-// 	return notices
-// }
