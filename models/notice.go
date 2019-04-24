@@ -4,6 +4,8 @@ import (
 	"fmt"
 	u "go-contacts/utils"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
 // ///////////////////// //
@@ -11,19 +13,16 @@ import (
 // ////////////////////	//
 // Notices for creating notice table on db
 type Notices struct {
-	// gorm.Model
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
-	DeletedAt  *time.Time `sql:"index"`
-	ID         uint       `json:"id"`
-	Title      string     `json:"title"`
-	Expiry     time.Time  `json:"expiry"`
-	Subject    string     `json:"subject"`
-	Content    string     `json:"content"`
-	Department string     `json:"department"`
-	Urgent     bool       `json:"urgent"`
-	Status     bool       `json:"status"`
-	UserID     uint       `json:"user_id"`
+	gorm.Model
+	Title      string    `json:"title"`
+	Expiry     time.Time `json:"expiry"`
+	Subject    string    `json:"subject"`
+	Content    string    `json:"content"`
+	Department string    `json:"department"`
+	Urgent     bool      `json:"urgent"`
+	Status     bool      `json:"status"`
+	// Type       string    `json:"type"`
+	UserID uint `json:"user_id"`
 }
 
 /*
@@ -60,6 +59,10 @@ func (notice *Notices) Validate() (map[string]interface{}, bool) {
 		return u.Message(false, "User is not recognized"), false
 	}
 
+	// if notice.Type <= "" {
+	// 	return u.Message(false, "Notice type is not recognized"), false
+	// }
+
 	//All the required parameters are present
 	return u.Message(true, "success"), true
 }
@@ -86,7 +89,8 @@ func (notice *Notices) Delete() map[string]interface{} {
 	if resp, ok := notice.ValidateDelete(); !ok {
 		return resp
 	}
-	GetDB().Delete(notice).Where("id = ?", notice.ID)
+	err := GetDB().Delete(notice).Set("status = ?", false).Where("id = ?", notice.ID)
+	fmt.Println(err)
 
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
@@ -94,12 +98,13 @@ func (notice *Notices) Delete() map[string]interface{} {
 }
 
 func (notice *Notices) Update() map[string]interface{} {
-	// notices := make([]*Notices, 0)
-	if resp, ok := notice.Validate(); !ok {
-		return resp
-	}
-	GetDB().Update(notice).Where("id = ?", notice.ID)
 
+	// FOR NOW I HAVE TURNED THIS VALIDATION OFF SO THAT I COULD SEND ANY FILED I WANT
+
+	// if resp, ok := notice.Validate(); !ok {
+	// 	return resp
+	// }
+	GetDB().Update(notice).Set("title = %1", notice.Title).Where("id = %1", notice.ID)
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
 	return resp

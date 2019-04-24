@@ -18,7 +18,7 @@ func main() {
 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
 	router.HandleFunc("/api/notice/post", controllers.CreateNotice).Methods("POST")
-	// router.HandleFunc("/api/notice/update", controllers.UpdateNotice).Methods("POST")
+	router.HandleFunc("/api/notice/update", controllers.UpdateNotice).Methods("POST")
 	router.HandleFunc("/api/notice/delete", controllers.DeleteNotice).Methods("POST")
 	router.HandleFunc("/api/notice/fetch", controllers.GetNoticeFor).Methods("GET")
 	router.HandleFunc("/api/notice/yournotice", controllers.GetYourNoticesOnly).Methods("GET")
@@ -47,8 +47,7 @@ func main() {
 		},
 
 		AllowedHeaders: []string{
-			"*", //or you can your header key values which you are using in your application
-
+			"*",
 		},
 	})
 
