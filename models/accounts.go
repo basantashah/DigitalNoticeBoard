@@ -110,6 +110,35 @@ func Login(email, password string) map[string]interface{} {
 	return resp
 }
 
+func (account *Account) Change() map[string]interface{} {
+
+	// if resp, ok := account.Validate(); !ok {
+	// 	return resp
+	// }
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(account.Password), bcrypt.DefaultCost)
+	account.Password = string(hashedPassword)
+
+	GetDB().Update(account)
+
+	if account.ID <= 0 {
+		return u.Message(false, "Failed to create account, connection error.")
+	}
+
+	//Create new JWT token for the newly registered account
+	// tk := &Token{UserId: account.ID}
+	// // Using HS256 for token system
+	// token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
+	// tokenString, _ := token.SignedString([]byte(os.Getenv("token_password")))
+	// account.Token = tokenString
+
+	account.Password = "" //delete password to avoid any record keeping or misuse
+
+	response := u.Message(true, "Account password changed successfully")
+	response["account"] = account
+	return response
+}
+
 func GetUser(u uint) *Account {
 
 	acc := &Account{}

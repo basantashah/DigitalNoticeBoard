@@ -16,6 +16,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
+	router.HandleFunc("/api/user/changepassword", controllers.ChangePassword).Methods("POST")
 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
 	router.HandleFunc("/api/notice/post", controllers.CreateNotice).Methods("POST")
 	router.HandleFunc("/api/notice/update", controllers.UpdateNotice).Methods("POST")
