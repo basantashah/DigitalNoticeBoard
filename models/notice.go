@@ -21,12 +21,12 @@ type Notices struct {
 	Department string    `json:"department"`
 	Urgent     bool      `json:"urgent"`
 	Status     bool      `json:"status"`
-	// Type       string    `json:"type"`
-	UserID uint `json:"user_id"`
+	Type       string    `json:"type"`
+	UserID     uint      `json:"user_id"`
 }
 
 /*
- This struct function validate the required parameters sent through the http request body
+	This struct function validate the required parameters sent through the http request body
 
 returns message and true if the requirement is met
 */
@@ -59,9 +59,9 @@ func (notice *Notices) Validate() (map[string]interface{}, bool) {
 		return u.Message(false, "User is not recognized"), false
 	}
 
-	// if notice.Type <= "" {
-	// 	return u.Message(false, "Notice type is not recognized"), false
-	// }
+	if notice.Type <= "" {
+		return u.Message(false, "Notice type is not recognized"), false
+	}
 
 	//All the required parameters are present
 	return u.Message(true, "success"), true
@@ -99,12 +99,13 @@ func (notice *Notices) Delete() map[string]interface{} {
 
 func (notice *Notices) Update() map[string]interface{} {
 
-	// FOR NOW I HAVE TURNED THIS VALIDATION OFF SO THAT I COULD SEND ANY FILED I WANT
-
-	// if resp, ok := notice.Validate(); !ok {
+	// if resp, ok := notice.ValidateDelete(); !ok {
 	// 	return resp
 	// }
-	GetDB().Update(notice).Set("title = %1", notice.Title).Where("id = %1", notice.ID)
+	err := GetDB().Delete(notice).Where("title = ?", notice.Title)
+	fmt.Println(err)
+	GetDB().Create(notice).Where("")
+
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
 	return resp
