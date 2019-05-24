@@ -3,6 +3,7 @@ package main
 import (
 	"go-contacts/app"
 	"go-contacts/controllers"
+	"go-contacts/library"
 	"log"
 	"net/http"
 	"os"
@@ -24,8 +25,8 @@ func main() {
 	router.HandleFunc("/api/notice/fetch", controllers.GetNoticeFor).Methods("GET")
 	router.HandleFunc("/api/notice/yournotice", controllers.GetYourNoticesOnly).Methods("GET")
 
-	router.Use(app.JwtAuthentication) //attach JWT auth middleware
-	router.Use(app.LoggingMiddleware) //log all the post and get with response
+	router.Use(app.JwtAuthentication)     //attach JWT auth middleware
+	router.Use(library.LoggingMiddleware) //log all the post and get with response
 
 	port := os.Getenv("PORT")
 

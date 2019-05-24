@@ -63,7 +63,7 @@ func (account *Account) Create() map[string]interface{} {
 
 	GetDB().Create(account)
 
-	if account.ID <= 0 {
+	if account.ID <= 0 { //Check if account id is less than 0, which shouldn't be
 		return u.Message(false, "Failed to create account, connection error.")
 	}
 
@@ -87,7 +87,7 @@ func Login(email, password string) map[string]interface{} {
 	err := GetDB().Table("accounts").Where("email = ?", email).First(account).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return u.Message(false, "Email address not found")
+			return u.Message(false, "Invalid input or unkown admin")
 		}
 		return u.Message(false, "Connection error. Please retry")
 	}

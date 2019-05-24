@@ -4,23 +4,21 @@ import (
 	"fmt"
 	"os"
 
-	"gopkg.in/gomail.v2"
+	"gopkg.in/mail.v2"
 )
 
 func SendMail() {
-	m := gomail.NewMessage()
+	m := mail.NewMessage()
 	m.SetHeader("From", "bindassbasanta@gmail.com")
-	m.SetHeader("To", "bindassbasanta@gmail.com")
-	m.SetAddressHeader("Cc", "basanta.shah@islingtoncollege.edu.np", "Dan")
-	m.SetHeader("Subject", "Hello!")
-	m.SetBody("text/html", "Hello <b>Bob</b> and <i>Cora</i>!")
-	// m.Attach("/home/Alex/lolcat.jpg")
+	m.SetHeader("To", "basanta.shah@islingtoncollege.edu.np", "sity1n117028@islingtoncollege.edu.np")
+	// m.SetAddressHeader("Cc", "bindassbasanta@gmail.com", "Dan")
+	m.SetHeader("Subject", "New notice approval!")
+	m.SetBody("text/string", "<pre>resp</pre>")
 
-	d := gomail.NewDialer("smtp.gmail.com", 587, "basantashah1993@gmail.com", os.Getenv("PASSWORD"))
-
-	// Send the email to Bob, Cora and Dan.
-	if err := d.DialAndSend(m); err != nil {
-		panic(err)
+	dialer := mail.NewPlainDialer("smtp.gmail.com", 587, "bindassbasanta@gmail.com", os.Getenv("PASSWORD")) /* gomail.NewPlainDialer("smtp.gmail.com", 587, "basanta.shah@islingtoncollege.edu.np", "th3Altern@tive") */
+	err := dialer.DialAndSend(m)
+	if err != nil {
+		fmt.Println(err)
 	}
-	fmt.Println("mail sent")
+	fmt.Println("Email Sent", dialer)
 }

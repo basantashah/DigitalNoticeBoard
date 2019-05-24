@@ -102,9 +102,12 @@ func (notice *Notices) Update() map[string]interface{} {
 	// if resp, ok := notice.ValidateDelete(); !ok {
 	// 	return resp
 	// }
-	err := GetDB().Delete(notice).Where("title = ?", notice.Title)
-	fmt.Println(err)
-	GetDB().Create(notice).Where("")
+	// err := GetDB().Update(notice).Set("title", notice.Title).Where("id", notice.ID)
+	err := GetDB().Save(&notice)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// GetDB().Create(notice).Where("")
 
 	resp := u.Message(true, "success")
 	resp["notice"] = notice
