@@ -15,6 +15,7 @@ import (
 type Notices struct {
 	gorm.Model
 	Title      string    `json:"title"`
+	Schedule   string    `json:"schedule"`
 	Expiry     time.Time `json:"expiry"`
 	Subject    string    `json:"subject"`
 	Content    string    `json:"content"`
