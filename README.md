@@ -4,10 +4,12 @@
     > This is the api used for digital notice board
 
 ###### Register new user
+```
 {
-    "email": "chanda.sah@test.net",
+    "email": "Basanta.Shah@test.net",
     "password": "test@123"
 }
+```
 
 ###### Postnotice
 ```
