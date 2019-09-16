@@ -7,7 +7,6 @@ import (
 	u "github.com/basantashah/DigitalNoticeBoard/utils"
 	"net/http"
 	"os"
-
 	"gopkg.in/mail.v2"
 )
 

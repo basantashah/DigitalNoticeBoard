@@ -1,13 +1,12 @@
 package main
 
 import (
-	"github.com/basantashah/DigitalNoticeBoard/app"
-	"github.com/basantashah/DigitalNoticeBoard/controllers"
 	"github.com/basantashah/DigitalNoticeBoard/library"
 	"log"
 	"net/http"
 	"os"
-
+	"github.com/basantashah/DigitalNoticeBoard/controllers"
+	"github.com/basantashah/DigitalNoticeBoard/app"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )

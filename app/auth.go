@@ -3,11 +3,13 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/basantashah/DigitalNoticeBoard/models"
-	u "github.com/basantashah/DigitalNoticeBoard/utils"
 	"net/http"
 	"os"
 	"strings"
+
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
+
+	"github.com/basantashah/DigitalNoticeBoard/models"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
