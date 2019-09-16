@@ -1,11 +1,13 @@
 package main
 
 import (
-	"go-contacts/app"
-	"go-contacts/controllers"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/basantashah/DigitalNoticeBoard/controllers"
+
+	"github.com/basantashah/DigitalNoticeBoard/app"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
