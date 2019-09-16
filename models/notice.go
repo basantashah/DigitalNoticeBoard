@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	u "go-contacts/utils"
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
 	"time"
 
 	"github.com/jinzhu/gorm"

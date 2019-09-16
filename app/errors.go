@@ -1,7 +1,7 @@
 package app
 
 import (
-	u "go-contacts/utils"
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
 	"net/http"
 )
 

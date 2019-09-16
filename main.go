@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go-contacts/app"
-	"go-contacts/controllers"
-	"go-contacts/library"
+	"github.com/basantashah/DigitalNoticeBoard/app"
+	"github.com/basantashah/DigitalNoticeBoard/controllers"
+	"github.com/basantashah/DigitalNoticeBoard/library"
 	"log"
 	"net/http"
 	"os"

@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
-	"go-contacts/models"
-	u "go-contacts/utils"
+	"github.com/basantashah/DigitalNoticeBoard/models"
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
 	"net/http"
 )
 

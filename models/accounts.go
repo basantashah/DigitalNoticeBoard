@@ -1,7 +1,7 @@
 package models
 
 import (
-	u "go-contacts/utils"
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
 	"os"
 	"strings"
 
