@@ -21,3 +21,27 @@
     "status": "TRUE"
 }
 ```
+
+###### The tree diagram of the directory is
+```
+.
+├── README.md
+├── app
+│   ├── auth.go
+│   ├── errors.go
+│   └── middleware.go
+├── controllers
+│   ├── authControllers.go
+│   └── noticesControllers.go
+├── go.mod
+├── go.sum
+├── main.go
+├── models
+│   ├── accounts.go
+│   ├── base.go
+│   └── notice.go
+└── utils
+    └── util.go
+
+4 directories, 13 files
+```
