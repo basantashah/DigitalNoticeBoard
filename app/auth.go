@@ -3,11 +3,13 @@ package app
 import (
 	"context"
 	"fmt"
-	"go-contacts/models"
-	u "go-contacts/utils"
 	"net/http"
 	"os"
 	"strings"
+
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
+
+	"github.com/basantashah/DigitalNoticeBoard/models"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )

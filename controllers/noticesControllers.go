@@ -3,9 +3,11 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"go-contacts/models"
-	u "go-contacts/utils"
 	"net/http"
+
+	u "github.com/basantashah/DigitalNoticeBoard/utils"
+
+	"github.com/basantashah/DigitalNoticeBoard/models"
 )
 
 var CreateNotice = func(w http.ResponseWriter, r *http.Request) {
