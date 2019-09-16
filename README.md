@@ -3,13 +3,13 @@
     # Under Development
     > This is the api used for digital notice board
 
-#Register new user
+###### Register new user
 {
     "email": "chanda.sah@test.net",
     "password": "test@123"
 }
 
-#Postnotice
+###### Postnotice
 ```
 {
     "title": "this is the title",
