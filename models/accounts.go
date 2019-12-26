@@ -64,7 +64,7 @@ func (account *Account) Create() map[string]interface{} {
 
 	GetDB().Create(account)
 
-	if account.ID <= 0 {
+	if account.ID <= 0 { //Check if account id is less than 0, which shouldn't be
 		return u.Message(false, "Failed to create account, connection error.")
 	}
 
@@ -88,7 +88,7 @@ func Login(email, password string) map[string]interface{} {
 	err := GetDB().Table("accounts").Where("email = ?", email).First(account).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return u.Message(false, "Email address not found")
+			return u.Message(false, "Invalid input or unkown admin")
 		}
 		return u.Message(false, "Connection error. Please retry")
 	}
@@ -109,6 +109,35 @@ func Login(email, password string) map[string]interface{} {
 	resp := u.Message(true, "Logged In")
 	resp["account"] = account
 	return resp
+}
+
+func (account *Account) Change() map[string]interface{} {
+
+	// if resp, ok := account.Validate(); !ok {
+	// 	return resp
+	// }
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(account.Password), bcrypt.DefaultCost)
+	account.Password = string(hashedPassword)
+
+	GetDB().Update(account)
+
+	if account.ID <= 0 {
+		return u.Message(false, "Failed to create account, connection error.")
+	}
+
+	//Create new JWT token for the newly registered account
+	// tk := &Token{UserId: account.ID}
+	// // Using HS256 for token system
+	// token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
+	// tokenString, _ := token.SignedString([]byte(os.Getenv("token_password")))
+	// account.Token = tokenString
+
+	account.Password = "" //delete password to avoid any record keeping or misuse
+
+	response := u.Message(true, "Account password changed successfully")
+	response["account"] = account
+	return response
 }
 
 func GetUser(u uint) *Account {

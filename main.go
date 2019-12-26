@@ -1,14 +1,12 @@
 package main
 
 import (
+	"github.com/basantashah/DigitalNoticeBoard/library"
 	"log"
 	"net/http"
 	"os"
-
 	"github.com/basantashah/DigitalNoticeBoard/controllers"
-
 	"github.com/basantashah/DigitalNoticeBoard/app"
-
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -18,15 +16,16 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
+	router.HandleFunc("/api/user/changepassword", controllers.ChangePassword).Methods("POST")
 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
 	router.HandleFunc("/api/notice/post", controllers.CreateNotice).Methods("POST")
 	router.HandleFunc("/api/notice/update", controllers.UpdateNotice).Methods("POST")
-	// router.HandleFunc("/api/notice/delete", controllers.DeleteNotice).Methods("POST")
+	router.HandleFunc("/api/notice/delete", controllers.DeleteNotice).Methods("POST")
 	router.HandleFunc("/api/notice/fetch", controllers.GetNoticeFor).Methods("GET")
 	router.HandleFunc("/api/notice/yournotice", controllers.GetYourNoticesOnly).Methods("GET")
 
-	router.Use(app.JwtAuthentication) //attach JWT auth middleware
-	router.Use(app.LoggingMiddleware) //log all the post and get with response
+	router.Use(app.JwtAuthentication)     //attach JWT auth middleware
+	router.Use(library.LoggingMiddleware) //log all the post and get with response
 
 	port := os.Getenv("PORT")
 
@@ -49,10 +48,10 @@ func main() {
 		},
 
 		AllowedHeaders: []string{
-			"*", //or you can your header key values which you are using in your application
-
+			"*",
 		},
 	})
 
 	http.ListenAndServe(":"+os.Getenv("PORT"), corsOpts.Handler(router))
+
 }

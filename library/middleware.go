@@ -1,4 +1,4 @@
-package app
+package library
 
 import (
 	"fmt"
@@ -18,5 +18,6 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 
 		// Call the next handler, which can be another middleware in the chain, or the final handler.
 		next.ServeHTTP(w, r)
+
 	})
 }

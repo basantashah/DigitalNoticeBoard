@@ -2,11 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
-	"net/http"
-
 	"github.com/basantashah/DigitalNoticeBoard/models"
-
 	u "github.com/basantashah/DigitalNoticeBoard/utils"
+	"net/http"
 )
 
 var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
@@ -19,6 +17,19 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := account.Create() //Create account
+	u.Respond(w, resp)
+}
+
+var ChangePassword = func(w http.ResponseWriter, r *http.Request) {
+
+	account := &models.Account{}
+	// err := json.NewDecoder(r.Body).Decode(account) //decode the request body into struct and failed if any error occur
+	// if err != nil {
+	// 	u.Respond(w, u.Message(false, "Invalid request"))
+	// 	return
+	// }
+
+	resp := account.Change() //update account password
 	u.Respond(w, resp)
 }
 

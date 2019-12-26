@@ -1,9 +1,8 @@
 package app
 
 import (
-	"net/http"
-
 	u "github.com/basantashah/DigitalNoticeBoard/utils"
+	"net/http"
 )
 
 var NotFoundHandler = func(next http.Handler) http.Handler {
